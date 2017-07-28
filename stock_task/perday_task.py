@@ -44,7 +44,6 @@ def day_k_stock(cb, ktype='D', start_date='2017-01-01'):
                     cb(data)
         except Exception as e:
             fail_stock_list.append(stock['code'])
-
     start_date = datetime.datetime.strptime(start_date, DateFmt) + datetime.timedelta(days=1)
     sche_config.setperdaydate(ktype, start_date.strftime(DateFmt))
     if len(fail_stock_list) > 0:

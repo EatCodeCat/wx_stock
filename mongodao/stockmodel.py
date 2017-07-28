@@ -26,7 +26,7 @@ class SchedulerConfig(mongoclient.MClient):
     def setperdaydate(self, ktype, date):
         self.update({
             'start_date_' + ktype: date
-        }, {'type': PERDAYTYPE})
+        }, type=PERDAYTYPE)
 
     def get_scheduler_config(self):
         return self.find_one(type=PERDAYTYPE)

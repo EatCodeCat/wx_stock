@@ -1,32 +1,32 @@
 from mongodao import mongoclient
 
+# stock mongodb 名称
+STOCK_DB = 'stock'
+# 配置表每日任务类型
+PERDAYTYPE = 'perdaytask'
+
 
 class BasicStockModel(mongoclient.MClient):
     def __init__(self):
-        super().__init__('stock', 'basic_stock')
+        super().__init__(STOCK_DB, 'basic_stock')
 
 
 class KStockModel(mongoclient.MClient):
     def __init__(self):
-        super().__init__('stock', 'k_stock')
+        super().__init__(STOCK_DB, 'k_stock')
 
 
 class K30StockModel(mongoclient.MClient):
     def __init__(self):
-        super().__init__('stock', 'k30_stock')
-
-
-PERDAYTYPE = 'perdaytask'
+        super().__init__(STOCK_DB, 'k30_stock')
 
 
 class SchedulerConfig(mongoclient.MClient):
     def __init__(self):
         super().__init__('stock', 'scheduler_config')
 
-    def setperdaydate(self, ktype, date):
-        self.update({
-            'start_date_' + ktype: date
-        }, type=PERDAYTYPE)
+    def setperdaydate(self, ktype: str, date: str):
+        self.update({"$set": {'start_date_' + ktype: date}}, type=PERDAYTYPE)
 
     def get_scheduler_config(self):
         return self.find_one(type=PERDAYTYPE)

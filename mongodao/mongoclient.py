@@ -40,6 +40,9 @@ class MClient:
     def delete(self, _id):
         return self.collection.delete_one({"_id": _id})
 
+    def removeAll(self):
+        return self.collection.remove()
+
     def insert_find_one(self):
         self.collection.insert_one()
 
@@ -49,3 +52,14 @@ class MClient:
     @property
     def _id(self):
         return self.collection._id
+
+    def close(self):
+        self.client.close()
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        if exc_tb is not None:
+            print(exc_tb)
+        self.close()
